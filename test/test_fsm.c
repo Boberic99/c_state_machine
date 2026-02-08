@@ -34,11 +34,14 @@ int main(){
     door_sensor_t door_sensor;
     fsm_state_t new_state;
 
+    /* Initialize door sensor */
     status = sensor_init(&door_sensor, DOOR_INIT_STATE);
     if (status != FSM_OK){
         printf("Sensor Initiation resulted in error:%d !\n",status);
         return -1;
     }
+
+    /* Initialize door fsm */
     status = fsm_init(&door_fsm, table, TABLE_SIZE, DOOR_INIT_STATE, &door_sensor);
     if (status != FSM_OK){
         printf("FSM Initiation resulted in error:%d !\n",status);
@@ -97,7 +100,7 @@ int main(){
             return -1;
         }
     }
-    printf("ALL TEST PASSED\n");
+    printf("ALL TESTS PASSED\n");
 
     return 0;
 }
