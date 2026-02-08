@@ -8,11 +8,7 @@ fsm_status_t fsm_init(fsm_t *fsm,
                         void *user_ctx){
 
     /* Table is read-only and owned by caller */
-    if ((table == NULL) || (table_size <= 0)){
-        return FSM_ERROR_INVALID_ARG;
-    }
-
-    if (fsm == NULL){
+    if ((table == NULL) || (table_size <= 0) || (fsm == NULL)){
         return FSM_ERROR_INVALID_ARG;
     } else{
         fsm->current = initial_state;
@@ -21,7 +17,6 @@ fsm_status_t fsm_init(fsm_t *fsm,
         fsm->user_ctx = user_ctx;
     }
     
-
     return FSM_OK;
 }
 
@@ -47,21 +42,19 @@ fsm_status_t fsm_handle_event(fsm_t* fsm,
                             }
                             return status;
                         } else{
-                            /* Error occured during tranision */
+                            /* Error occured during transition */
                             return status;
                         }
                 }
 
         }
     }
-    /* No matching transition found */
-    status = FSM_ERROR_INVALID_TRANSITION;
-    
-    return status;
+    /* No matching transition found */   
+    return FSM_ERROR_INVALID_TRANSITION;
 }
 
 fsm_state_t fsm_get_state(const fsm_t *fsm){
-    return fsm ? fsm->current : FSM_ERROR_INVALID_ARG;
+    return fsm == NULL ? FSM_ERROR_INVALID_ARG : fsm->current; 
 }
 
 fsm_status_t fsm_reset(fsm_t *fsm, fsm_state_t initial_state){

@@ -26,12 +26,11 @@ typedef struct {
 }door_sensor_t;
 
 fsm_status_t sensor_init(door_sensor_t* sensor, door_state_t initial_state){
-    fsm_status_t status = FSM_OK;
     if (sensor == NULL){
         return FSM_ERROR_INVALID_ARG;
     } else {
         sensor->state = initial_state;
-        return status;
+        return FSM_OK;
     }
 }
 
