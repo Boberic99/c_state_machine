@@ -31,7 +31,7 @@ fsm_status_t fsm_handle_event(fsm_t* fsm,
     fsm_status_t status = FSM_OK;
 
     if ((fsm == NULL) || (fsm->table == NULL) || (fsm->table_size <= 0)) {
-        return FSM_ERROR_NOT_INITIALIZED;
+        return FSM_ERROR_INVALID_ARG;
     }
     for(size_t i = 0; i < fsm->table_size; i++){
         if (fsm->table[i].from == fsm->current &&
