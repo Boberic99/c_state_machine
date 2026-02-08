@@ -3,6 +3,7 @@ CC = gcc
 AR = ar
 
 I = -I include
+IEXAMPLE = $(I) -I examples
 
 SRC = src/fsm.c
 
@@ -24,10 +25,11 @@ obj/fsm.o: src/fsm.c
 	$(CC) $(I) $(CFLAGS) -c $(SRC) -o $@
 
 test: obj/test_fsm.o $(LIBFSM)
-	$(CC) $(I) $(CFLAGS) obj/test_fsm.o $(LDFLAGS) $(LDLIBS) -o test/test_fsm
+	$(CC) $(IEXAMPLE) $(CFLAGS) obj/test_fsm.o $(LDFLAGS) $(LDLIBS) -o test/test_fsm
+	./test/test_fsm
 
 obj/test_fsm.o: test/test_fsm.c $(LIBFSM)
-	$(CC) $(I) $(CFLAGS) -c test/test_fsm.c $(LDLIBS) $(LDFLAGS) -o obj/test_fsm.o
+	$(CC) $(IEXAMPLE) $(CFLAGS) -c test/test_fsm.c $(LDLIBS) $(LDFLAGS) -o obj/test_fsm.o
 
 example: obj/door_example.o $(LIBFSM)
 	$(CC) obj/door_example.o $(I) $(CFLAGS) $(LDLIBS) $(LDFLAGS) -o examples/door_example
