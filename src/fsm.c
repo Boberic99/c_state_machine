@@ -25,7 +25,7 @@ fsm_status_t fsm_handle_event(fsm_t* fsm,
                         fsm_state_t *out_new_state){
     fsm_status_t status = FSM_OK;
 
-    if ((fsm == NULL) || (fsm->table == NULL) || (fsm->table_size <= 0)) {
+    if ((fsm == NULL) || (fsm->table == NULL) || (fsm->table_size == 0)) {
         return FSM_ERROR_INVALID_ARG;
     }
     for(size_t i = 0; i < fsm->table_size; i++){
@@ -45,6 +45,12 @@ fsm_status_t fsm_handle_event(fsm_t* fsm,
                             /* Error occured during transition */
                             return status;
                         }
+                } else {
+                    fsm->current = fsm->table[i].to;
+                    if (out_new_state != NULL){
+                        *out_new_state = fsm->table[i].to;
+                    }
+                    return FSM_OK;
                 }
 
         }
@@ -53,8 +59,13 @@ fsm_status_t fsm_handle_event(fsm_t* fsm,
     return FSM_ERROR_INVALID_TRANSITION;
 }
 
-fsm_state_t fsm_get_state(const fsm_t *fsm){
-    return fsm == NULL ? FSM_ERROR_INVALID_ARG : fsm->current; 
+fsm_status_t fsm_get_state(const fsm_t *fsm, fsm_state_t *out_state){
+    if (fsm == NULL) {
+        return FSM_ERROR_INVALID_ARG;
+    } else {
+        *out_state = fsm->current;
+        return FSM_OK;
+    }
 }
 
 fsm_status_t fsm_reset(fsm_t *fsm, fsm_state_t initial_state){

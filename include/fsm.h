@@ -56,13 +56,10 @@ fsm_status_t fsm_handle_event(fsm_t* fsm,
                         fsm_state_t *out_new_state);
 
 /* Querry current state */
-fsm_state_t fsm_get_state(const fsm_t *fsm);
+fsm_status_t fsm_get_state(const fsm_t *fsm, fsm_state_t *out_state);
 
 /* Reset to initial state */
 fsm_status_t fsm_reset(fsm_t *fsm, fsm_state_t initial_state);
-
-/* Free dynamically allocated memory */
-void fsm_free(fsm_t *fsm);
 
 #ifdef __cplusplus
 }
